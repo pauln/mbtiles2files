@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -50,9 +51,9 @@ func main() {
 		}
 		log.Printf("[%d:%d @ %d, %s]\n", col, row, zoom, tile)
 		tilePath := fmt.Sprintf("tiles/%s/%s", strconv.Itoa(zoom), strconv.Itoa(col))
-		os.MkdirAll(tilePath, 0777)
+		os.MkdirAll(filepath.FromSlash(tilePath), 0777)
 
-		tileFile := fmt.Sprintf("%s/%s.png", tilePath, strconv.Itoa(row))
+		tileFile := fmt.Sprintf("%s/%s.png", filepath.FromSlash(tilePath), strconv.Itoa(row))
 		file, err := os.Create(tileFile)
 		if err == nil {
 			file.Write(data)
